@@ -24,8 +24,8 @@ public class Example3 {
     	System.out.println("초단기 실황 조회");
         StringBuilder urlBuilder = new StringBuilder("http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=2eTy2IIfV6eAj6O2LB0fC5hNXs2WmDsoxa0m%2BTsIzQ4SSd8HKolUqdcWLOzS2Y85pJcyburnWWIs77SM1tqiNA%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode("20181122", "UTF-8")); /*‘15년 12월 1일 발표*/
-        urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode("1800", "UTF-8")); /*06시 발표(정시단위) -매시각 40분 이후 호출*/
+        urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode("20181124", "UTF-8")); /*‘15년 12월 1일 발표*/
+        urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode("1300", "UTF-8")); /*06시 발표(정시단위) -매시각 40분 이후 호출*/
         urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode("60", "UTF-8")); /*예보지점의 X 좌표값*/
         urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode("127", "UTF-8")); /*예보지점의 Y 좌표값*/
         urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
