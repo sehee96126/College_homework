@@ -13,7 +13,11 @@ import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class GetOpenApiData {
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+class GetOpenApiData {
 	static final String weatherKey = "=R0wjLVu6A6uqBAgcRyvO%2F79tWTISM%2FoRd8dNHL21DdYR5fjg386BONfz6XioYiHjX5IlrCQ38QoSTj7%2BgvqnSQ%3D%3D";
 	
 	/* 0 : 초단기 실황 조회
@@ -22,11 +26,11 @@ public class GetOpenApiData {
 			"http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastTimeData",
 			"http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData"};
 	
-	String date;
-	int time[] = new int[3];
+	private String date;
+	private int time[] = new int[3];
 
 
-	public void checkDate() {
+	private void checkDate() {
 		int time_buf;
 		LocalDateTime curDateTime = LocalDateTime.now();
 
@@ -42,11 +46,6 @@ public class GetOpenApiData {
 		if(time[2]<=0) time[2] = 2300;
 	}
 	
-	void updateValue(String nx, String ny) throws IOException {
-		this.checkDate();
-		this.getWeatherData(nx, ny, 0);
-	}
-
 	String getWeatherData(String nx, String ny, int type) throws IOException {
 		this.checkDate();
 		StringBuilder urlBuilder = new StringBuilder(weatherUrlString[type]); /* URL */
@@ -60,7 +59,7 @@ public class GetOpenApiData {
 		urlBuilder.append(
 				"&" + URLEncoder.encode("ny", "UTF-8") + "=" + URLEncoder.encode(ny, "UTF-8")); /* 예보지점의 Y 좌표값 */
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
-				+ URLEncoder.encode("100", "UTF-8")); /* 한 페이지 결과 수 */
+				+ URLEncoder.encode("1000", "UTF-8")); /* 한 페이지 결과 수 */
 		urlBuilder.append(
 				"&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* 페이지 번호 */
 		urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "="
@@ -88,5 +87,10 @@ public class GetOpenApiData {
 		//System.out.println(sb.toString());	
 		return sb.toString();
 	}
-	
+	static String getTagValue(String sTag, Element eElement) {
+		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+		Node nValue = (Node) nlList.item(0);
+
+		return nValue.getNodeValue();
+	}
 }

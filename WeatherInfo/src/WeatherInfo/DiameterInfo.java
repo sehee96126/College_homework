@@ -9,21 +9,23 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class DiameterInfo {
-	String diameterBuffer[][] = new String[3800][5];
+class DiameterInfo {
+	private String diameterBuffer[][] = new String[3800][5];
 
 	String[] checkDiameter(String addr) {
 		/*
 		 * 0: x좌표 1: y좌표
 		 */
 		String diameter[] = new String[2];
+		diameter[0] = "0";
+		diameter[1] = "0";
 		String sbuf;
 
 		addr = addr.replace(" ", "");
 		addr = addr.replace("특별시", "시");
 		addr = addr.replace("광역시", "시");
 		addr = addr.replace("특별자치도", "도");
-		for (int i = 0; i < diameterBuffer.length; i++) {
+		for (int i = 0; i < diameterBuffer.length && diameterBuffer[i][0] != null; i++) {
 			sbuf = diameterBuffer[i][0].concat(diameterBuffer[i][1]).concat(diameterBuffer[i][2]);
 			
 			sbuf = sbuf.replace(" ", "");
@@ -33,7 +35,6 @@ public class DiameterInfo {
 
 
 			if (addr.equals(sbuf)) {
-				System.out.println(sbuf);
 				try {
 					diameter[0] = diameterBuffer[i][3];
 					diameter[1] = diameterBuffer[i][4];
@@ -44,8 +45,7 @@ public class DiameterInfo {
 				return diameter;
 			}
 		}
-
-		return null;
+		return diameter;
 	}
 
 	void print() {

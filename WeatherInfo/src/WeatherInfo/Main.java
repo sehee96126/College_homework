@@ -8,8 +8,8 @@ public class Main {
 		DiameterInfo diameterInfo = new DiameterInfo();
 		GetOpenApiData api = new GetOpenApiData();
 		WeatherCurrentData nowWeather = new WeatherCurrentData();
-		WeatherForecastData fcstWeather = new WeatherForecastData();
 		
+		int dateNum = 10;
 		Scanner scan = new Scanner(System.in);
 		String xmlBuf;
 		String sbuf, addr;
@@ -17,13 +17,12 @@ public class Main {
 		int ibuf;
 
 		diameterInfo.parseDiameterInfo();
-		diameterInfo.print();
 		while (true) {
 
 			System.out.println("==============================================================");
 			System.out.println("원하는 정보의 종류를 입력해 주세요.");
 			System.out.println("0 : 현재 기상 조회");
-			System.out.println("1 : 초 단기 기사예보 조회");
+			System.out.println("1 : 초 단기 예보 조회");
 			System.out.println("2 : 동네 예보 조회");
 			System.out.println("3 : test");
 			System.out.print("입력값 : ");
@@ -46,15 +45,25 @@ public class Main {
 			addr = scan.nextLine();
 			diameter = diameterInfo.checkDiameter(addr);
 
-			if (diameter == null) {
+			if (diameter == null || diameter[0].equals("0") || diameter[1].equals("0")) {
 				System.out.println("잘못된 주소값입니다.");
+				printEnter(scan);
+				continue;
 			}
 			
 			if (ibuf == 0) {
 				try {
 					xmlBuf = api.getWeatherData(diameter[0], diameter[1], 0);
 					nowWeather.parseXml(xmlBuf);
-					nowWeather.print();
+					
+					System.out.println("<현재 기상 조회>");
+					System.out.println(
+							"=============================================================================================");
+					System.out.println("\t시간\t날씨\t기온(℃)\t습도(%)\t강수량(mm)");
+					System.out.println(
+							"=============================================================================================");
+					
+					nowWeather.printNow();
 				} catch (IOException e) {
 					System.out.println("현재 기상을 조회하는데 실패하였습니다.");
 					printEnter(scan);
@@ -63,8 +72,15 @@ public class Main {
 			}
 			else if (ibuf == 1) {
 				try {
+					WeatherForecast fcstWeather = new WeatherForecast(dateNum, 1);
 					xmlBuf = api.getWeatherData(diameter[0], diameter[1], 1);
 					fcstWeather.parseXml(xmlBuf);
+					System.out.println("<단기 예보 조회>");
+					System.out.println(
+							"=============================================================================================");
+					System.out.println("\t날짜\t\t시간\t날씨\t기온(℃)\t습도(%)\t강수량(mm)");
+					System.out.println(
+							"=============================================================================================");
 					fcstWeather.print();
 				} catch (IOException e) {
 					System.out.println("현재 기상을 조회하는데 실패하였습니다.");
@@ -74,8 +90,15 @@ public class Main {
 			}
 			else if (ibuf == 2) {
 				try {
+					WeatherForecast fcstWeather = new WeatherForecast(dateNum, 0);
 					xmlBuf = api.getWeatherData(diameter[0], diameter[1], 2);
 					fcstWeather.parseXml(xmlBuf);
+					System.out.println("<동네 예보 조회>");
+					System.out.println(
+							"======================================================================================================================");
+					System.out.println("\t날짜\t\t시간\t날씨\t기온(℃)\t습도(%)\t강수량(mm)\t아침 최저기온(℃)\t낮 최고기온(℃)\t강수확률(%)");
+					System.out.println(
+							"======================================================================================================================");
 					fcstWeather.print();
 				} catch (IOException e) {
 					System.out.println("현재 기상을 조회하는데 실패하였습니다.");
@@ -84,16 +107,13 @@ public class Main {
 				}
 			}
 			else if (ibuf == 3) {
-								
-				if (diameter == null) System.out.println("에러");
-				System.out.println("x 좌표 : " + diameter[0] + " y 좌표 : " + diameter[1]);
-				
+				System.out.println("test");
 			}
 			printEnter(scan);
 		}
 	}
 
-	public static void printEnter(Scanner scan) {
+	private static void printEnter(Scanner scan) {
 		System.out.println("Enter를 입력하면 처음으로 돌아갑니다.");
 		scan.nextLine();
 	}
