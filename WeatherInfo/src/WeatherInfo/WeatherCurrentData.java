@@ -29,14 +29,14 @@ class WeatherCurrentData {
 	}
 
 	void printNow() {
-		System.out.println("\t현재\t -\t" + Temp + "\t" + REH + "\t" + Rain);
+		System.out.println("\t현재\t" + Temp + "\t" + REH + "\t" + Rain);
 	}
 
 	void print() {
 		if (firstTime == 1)
 			System.out.println("--------------------------------------------------------------");
 		//if (Temp.equals("-") == false || Rain.equals("-") == false || REH.equals("-") == false)
-			System.out.println("\t" + fcstDate + "\t" + fcstTime + "\t-\t" + Temp + "\t" + REH + "\t" + Rain);
+			System.out.println("\t" + fcstDate + "\t" + fcstTime + "\t" + Temp + "\t" + REH + "\t" + Rain);
 	}
 
 	void parseCategoryData(Element eElement, int type) {

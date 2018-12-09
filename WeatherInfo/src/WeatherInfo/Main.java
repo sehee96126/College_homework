@@ -17,20 +17,28 @@ public class Main {
 		int ibuf;
 
 		diameterInfo.parseDiameterInfo();
+		System.out.println("위 경고문구는 사용된 라이브러리가 현재 자바 버전과 맞지 않아 발생되는 문제로, 버그가 아닙니다.");
+		System.out.println("(해당 라이브러리를 수정할 수 없음.)");
 		while (true) {
 
 			System.out.println("==============================================================");
-			System.out.println("원하는 정보의 종류를 입력해 주세요.");
-			System.out.println("0 : 현재 기상 조회");
-			System.out.println("1 : 초 단기 예보 조회");
-			System.out.println("2 : 동네 예보 조회");
-			System.out.println("3 : test");
-			System.out.print("입력값 : ");
-			sbuf = scan.nextLine();
+			System.out.println("----- < 내일 비와 ? > -----");
+			System.out.println("0 : 지역별 현재 날씨");
+			System.out.println("1 : 지역별 좀이따 날씨");
+			System.out.println("2 : 지역별 내일/모레 날씨");
+			System.out.println("보고싶은 정보의 번호를 입력해주세요");
+			System.out.print("--> ");
+			sbuf = scan.nextLine().replaceAll(" ", "");
+			
+			if(sbuf.length()> 1) {
+				System.out.println("\n잘못된 옵션값 입니다. 올바른 값을 입력해 주십시오");
+				printEnter(scan);
+				continue;
+			}
 
 			try {
 				ibuf = Integer.parseInt(sbuf);
-				if (ibuf < 0 || ibuf > 3) {
+				if (ibuf < 0 || ibuf > 2) {
 					System.out.println("\n잘못된 옵션값 입니다. 올바른 값을 입력해 주십시오");
 					printEnter(scan);
 					continue;
@@ -41,7 +49,8 @@ public class Main {
 				continue;
 			}
 
-			System.out.print("주소를 입력하세요 ex) 서울특별시  : ");
+			System.out.println("주소를 입력하세요. ex) 서울시 종로구, 경기도 부천시");
+			System.out.print("--> ");
 			addr = scan.nextLine();
 			diameter = diameterInfo.checkDiameter(addr);
 
@@ -59,7 +68,7 @@ public class Main {
 					System.out.println("<현재 기상 조회>");
 					System.out.println(
 							"=============================================================================================");
-					System.out.println("\t시간\t날씨\t기온(℃)\t습도(%)\t강수량(mm)");
+					System.out.println("\t시간\t기온(℃)\t습도(%)\t강수량(mm)");
 					System.out.println(
 							"=============================================================================================");
 					
@@ -78,7 +87,7 @@ public class Main {
 					System.out.println("<단기 예보 조회>");
 					System.out.println(
 							"=============================================================================================");
-					System.out.println("\t날짜\t\t시간\t날씨\t기온(℃)\t습도(%)\t강수량(mm)");
+					System.out.println("\t날짜\t\t시간\t기온(℃)\t습도(%)\t강수량(mm)");
 					System.out.println(
 							"=============================================================================================");
 					fcstWeather.print();
@@ -105,9 +114,6 @@ public class Main {
 					printEnter(scan);
 					continue;
 				}
-			}
-			else if (ibuf == 3) {
-				System.out.println("test");
 			}
 			printEnter(scan);
 		}

@@ -25,7 +25,7 @@ class WeatherForecast {
 			si = 8 * 3;
 			Type = 0;
 		} else {
-			si = 3;
+			si = 4;
 			Type = 1;
 		}
 		if (si != 0)
@@ -49,7 +49,7 @@ class WeatherForecast {
 
 			int i = 0, temp = 0;
 
-			for (i = 0; i <= weatherArry.length && temp < nList.getLength(); i++) {
+			for (i = 0; i < weatherArry.length && temp < nList.getLength(); i++) {
 
 				if (Type == 1)
 					weatherArry[i] = new WeatherCurrentData();
