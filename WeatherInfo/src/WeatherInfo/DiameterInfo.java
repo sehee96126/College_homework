@@ -28,13 +28,12 @@ class DiameterInfo {
 		addr = addr.replace("특별자치시", "시");
 		for (int i = 0; i < diameterBuffer.length && diameterBuffer[i][0] != null; i++) {
 			sbuf = diameterBuffer[i][0].concat(diameterBuffer[i][1]).concat(diameterBuffer[i][2]);
-			
+
 			sbuf = sbuf.replace(" ", "");
 			sbuf = sbuf.replace("특별시", "시");
 			sbuf = sbuf.replace("광역시", "시");
 			sbuf = sbuf.replace("특별자치도", "도");
 			sbuf = sbuf.replace("특별자치시", "시");
-
 
 			if (addr.equals(sbuf)) {
 				try {
@@ -62,7 +61,8 @@ class DiameterInfo {
 	void parseDiameterInfo() {
 		FileInputStream fis = null;
 		try {
-			fis = new FileInputStream("C:\\DiameterInfo.xlsx");
+			// fis = new FileInputStream("C:\\DiameterInfo.xlsx");
+			 fis = new FileInputStream(getClass().getResource("").getPath() + "../../excel/DiameterInfo.xlsx");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
